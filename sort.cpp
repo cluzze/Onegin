@@ -64,7 +64,7 @@ int strings_cmp(Line *str1, Line *str2)
 	if (s2[j] == '\0')
 		return 1;
 
-	return ((int)(unsigned char)(*s1) - (int)(unsigned char)(*s2));
+	return (int)(*s1) - (int)(*s2);
 }
 
 void build_heap(LinesArr *arr, int heap_size, int root, int (*cmp)(Line *str1, Line *str2))
