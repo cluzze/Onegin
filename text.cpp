@@ -69,8 +69,8 @@ void print_lines_arr(LinesArr *arr)
 		{
 			fprintf(stdout, "%c", arr->lines[i].line[j]);
 		}
-		if (i != 0)
-			fprintf(stdout, " - dif: %d", strings_cmp(&arr->lines[i], &arr->lines[i - 1]));
+/*		if (i != 0)
+			fprintf(stdout, " - dif: %d", strings_cmp(&arr->lines[i], &arr->lines[i - 1]));*/
 		fprintf(stdout, "\n");
 	}
 }

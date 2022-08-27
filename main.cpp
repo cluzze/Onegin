@@ -11,7 +11,7 @@ int main()
 {
 	LinesArr *arr    = NULL;
 	FILE *input_file = NULL;
-	const char input_filename[] = "Texts/text.txt";
+	const char input_filename[] = "Texts/Hamlet.txt";
 
 	input_file = fopen(input_filename, "rb");
 
@@ -28,11 +28,6 @@ int main()
 	print_lines_arr(arr);
 
 	heap_sort(arr, (int)arr->nlines);
-
-/*	Line l1 = {0, "\'as by lot, god wot, \'"};
-	Line l2 = {0, "A slave that is not twentieth part the tithe"};
-
-	printf("%d\n", strings_cmp(&l1, &l2));*/
 
 	printf("Sorted:\n");
 	print_lines_arr(arr);
