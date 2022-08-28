@@ -11,7 +11,7 @@ int main()
 {
 	LinesArr arr;
 
-	const char filename[] = "Texts/text.txt";
+	const char filename[] = "Texts/Hamlet.txt";
 	FILE *input_file = open_file(filename);
 
 	arr.nlines = find_nlines(input_file);
@@ -26,9 +26,6 @@ int main()
 	{
 		printf("%lu: %s\n", i, arr.lines[i].line);
 	}
-
-	free(arr.lines);
-	free(arr.text.line);
 	//printf("nlines: %lu\n", nlines);
 
 	//arr = create_lines_arr(input_file, nlines);
@@ -75,6 +72,9 @@ int main()
 
 /******************************CLEAN UP******************************/
 	//destroy_lines_arr(arr);
+
+	free(arr.lines);
+	free(arr.text.line);
 
 	fclose(input_file);
 	
