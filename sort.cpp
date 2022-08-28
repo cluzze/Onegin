@@ -128,19 +128,19 @@ void build_heap(LinesArr *arr, int heap_size, int root, int (*cmp)(Line *str1, L
 	}
 }
 
-void heap_sort(LinesArr *arr, int heap_size)
+void heap_sort(LinesArr *arr, int heap_size, int (*cmp)(Line *str1, Line *str2))
 {
 	MYASSERT(arr)
 
 	for (int i = heap_size / 2 - 1; i >= 0; i--)
 	{
-		build_heap(arr, heap_size, i, cmp_strings);
+		build_heap(arr, heap_size, i, cmp);
 	}
 
 	for (int i = heap_size - 1; i >= 0; i--)
 	{
 		swap(&arr->lines[0], &arr->lines[i]);
-		build_heap(arr, i, 0, cmp_strings);
+		build_heap(arr, i, 0, cmp);
 	}
 }
 

@@ -9,31 +9,72 @@
 
 int main()
 {
-	LinesArr *arr    = NULL;
-	FILE *input_file = NULL;
-	const char input_filename[] = "Texts/Hamlet.txt";
+	LinesArr arr;
 
-	input_file = fopen(input_filename, "rb");
+	const char filename[] = "Texts/text.txt";
+	FILE *input_file = open_file(filename);
 
-	MYASSERT(input_file != NULL)
+	arr.nlines = find_nlines(input_file);
+	arr.text.line_length = find_filesize(input_file);
+	arr.text.line = read_text(input_file, arr.text.line_length);
 
-	size_t nlines = 0;
+	printf("%s\n\n\n", arr.text.line);
 
-	nlines = find_nlines(input_file);
+	arr.lines = get_lines_from_text(arr.text.line, arr.nlines);
 
+	for (size_t i = 0; i < arr.nlines; i++)
+	{
+		printf("%lu: %s\n", i, arr.lines[i].line);
+	}
+
+	free(arr.lines);
+	free(arr.text.line);
 	//printf("nlines: %lu\n", nlines);
 
-	arr = create_lines_arr(input_file, nlines);
+	//arr = create_lines_arr(input_file, nlines);
 
-	print_lines_arr(arr);
+	//print_lines_arr(arr);
 
-	heap_sort(arr, (int)arr->nlines);
+	heap_sort(&arr, (int)arr.nlines, strings_cmp);
 
-	printf("Sorted:\n");
-	print_lines_arr(arr);
+	printf("\n\nSorted:\n");
+
+	for (size_t i = 0; i < arr.nlines; i++)
+	{
+		printf("%lu: %s\n", i, arr.lines[i].line);
+	}
+	//print_lines_arr(arr);
+
+	printf("\n");
+
+	heap_sort(&arr, (int)arr.nlines, cmp_strings);
+
+	printf("\n\nReverse sorted:\n");
+
+	for (size_t i = 0; i < arr.nlines; i++)
+	{
+		printf("%lu: %s\n", i, arr.lines[i].line);
+	}
+
+	printf("\n\nOriginal:\n");
+	for (size_t i = 0; i < arr.text.line_length; ++i)
+	{
+		int c = arr.text.line[i];
+		switch (c)
+		{
+			case '\0':
+				printf("\r");
+				break;
+			default:
+				printf("%c", c);
+				break;
+		}
+	}
+
+	printf("\n");
 
 /******************************CLEAN UP******************************/
-	destroy_lines_arr(arr);
+	//destroy_lines_arr(arr);
 
 	fclose(input_file);
 	

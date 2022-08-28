@@ -6,6 +6,69 @@
 #include <stdio.h>
 #include <string.h>
 
+FILE *open_file(const char filename[])
+{
+	FILE *input_file = NULL;
+
+	input_file = fopen(filename, "rb");
+
+	MYASSERT(input_file != NULL)
+
+	return input_file;
+}
+
+size_t find_filesize(FILE *fd)
+{
+	MYASSERT(fd != NULL)
+
+	size_t size = 0;
+
+	fseek(fd, 0, SEEK_END);
+	size = (size_t)ftell(fd);
+	fseek(fd, 0, SEEK_SET);
+
+	return size;
+}
+
+char* read_text(FILE *fd, size_t filesize)
+{
+	MYASSERT(fd != NULL)
+
+	char *buf = NULL;
+
+	buf = (char*)calloc(filesize + 1, sizeof(char));
+	MYASSERT(buf != NULL);
+	*(buf + filesize) = '\r';
+
+	fread(buf, sizeof(char), filesize, fd);
+
+	return buf;
+}
+
+Line* get_lines_from_text(char *text, size_t nlines)
+{
+	Line* lines = NULL;
+	size_t i = 0;
+
+	lines = (Line*)calloc(nlines, sizeof(Line));
+	MYASSERT(lines != NULL)
+
+	char* end = text;
+
+	for (i = 0; i < nlines; ++i)
+	{
+		end = strchr(text, '\r');
+		*end = '\0';
+
+		lines[i].line        = text;
+		lines[i].line_length = (size_t)(end - text);
+
+		text = end + 2;
+	}
+
+	return lines;
+}
+
 LinesArr* create_lines_arr(FILE *fd, size_t nlines)
 {
 	MYASSERT(fd != NULL)

@@ -11,6 +11,6 @@ int cmp_strings(Line *str1, Line *str2);
 
 void build_heap(LinesArr *arr, int heap_size, int root, int (*cmp)(Line *str1, Line *str2));
 
-void heap_sort(LinesArr *arr, int heap_size);
+void heap_sort(LinesArr *arr, int heap_size, int (*cmp)(Line *str1, Line *str2));
 
 #endif
