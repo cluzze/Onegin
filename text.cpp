@@ -14,6 +14,12 @@ void init_arr(FILE *fd, LinesArr *arr)
 	arr->lines            = get_lines_from_text(arr->text.line, arr->nlines);
 }
 
+void free_lines(LinesArr *arr)
+{
+	free(arr->lines);
+	free(arr->text.line);
+}
+
 FILE *open_file(const char filename[])
 {
 	FILE *input_file = NULL;

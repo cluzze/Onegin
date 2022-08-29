@@ -20,6 +20,8 @@ FILE *open_file(const char filename[]);
 
 void init_arr(FILE *fd, LinesArr *arr);
 
+void free_lines(LinesArr *arr);
+
 size_t find_filesize(FILE *fd);
 
 char* read_text(FILE *fd, size_t filesize);

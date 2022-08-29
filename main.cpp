@@ -33,8 +33,7 @@ int main()
 
 /******************************CLEAN UP******************************/
 
-	free(arr.lines);
-	free(arr.text.line);
+	free_lines(&arr);
 
 	fclose(input_file);
 	fclose(output_file);
