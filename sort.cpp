@@ -90,9 +90,6 @@ int cmp_strings(Line *str1, Line *str2)
 		--j;
 	}
 
-/*	fprintf(stdout, "%s - %lu - %d - %c, %s - %lu - %d - %c\n", s1, str1->line_length, i, s1[i], 
-		s2, str2->line_length, j, s2[j]);
-*/
 	if (s1[i] == '\0')
 		return -1;
 

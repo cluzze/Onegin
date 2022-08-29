@@ -6,6 +6,14 @@
 #include <stdio.h>
 #include <string.h>
 
+void init_arr(FILE *fd, LinesArr *arr)
+{
+	arr->nlines           = find_nlines(fd);
+	arr->text.line_length = find_filesize(fd);
+	arr->text.line        = read_text(fd, arr->text.line_length);
+	arr->lines            = get_lines_from_text(arr->text.line, arr->nlines);
+}
+
 FILE *open_file(const char filename[])
 {
 	FILE *input_file = NULL;
@@ -48,7 +56,7 @@ char* read_text(FILE *fd, size_t filesize)
 Line* get_lines_from_text(char *text, size_t nlines)
 {
 	Line* lines = NULL;
-	size_t i = 0;
+	size_t i    = 0;
 
 	lines = (Line*)calloc(nlines, sizeof(Line));
 	MYASSERT(lines != NULL)
@@ -57,7 +65,7 @@ Line* get_lines_from_text(char *text, size_t nlines)
 
 	for (i = 0; i < nlines; ++i)
 	{
-		end = strchr(text, '\r');
+		end  = strchr(text, '\r');
 		*end = '\0';
 
 		lines[i].line        = text;
@@ -69,56 +77,6 @@ Line* get_lines_from_text(char *text, size_t nlines)
 	return lines;
 }
 
-LinesArr* create_lines_arr(FILE *fd, size_t nlines)
-{
-	MYASSERT(fd != NULL)
-
-	LinesArr *arr = (LinesArr*)calloc(1, sizeof(LinesArr));
-	MYASSERT(arr != NULL)
-
-	arr->nlines   = nlines;
-	arr->lines    = (Line*)calloc(arr->nlines, sizeof(Line));
-	MYASSERT(arr->lines != NULL)
-
-	ssize_t line_length = 0;
-	size_t n            = 0;
-	char *lineptr       = NULL;
-	int i               = 0;
-
-	while ((line_length = getline(&lineptr, &n, fd)) != -1)
-	{
-		if (line_length > 1 && lineptr[line_length - 2] == '\r')
-		{
-			lineptr[line_length - 2] = '\0';
-			line_length -= 2;
-		}
-
-		arr->lines[i].line_length = (size_t)line_length;
-
-		arr->lines[i].line = (char*)calloc(arr->lines[i].line_length, sizeof(char));
-
-		strcpy(arr->lines[i].line, lineptr);
-
-		++i;
-	}
-
-	free(lineptr);
-
-	return arr;
-}
-
-void destroy_lines_arr(LinesArr *arr)
-{
-	size_t i = 0;
-
-	for (i = 0; i < arr->nlines; ++i)
-	{
-		free(arr->lines[i].line);
-	}
-	free(arr->lines);
-	free(arr);
-}
-
 void print_lines_arr(LinesArr *arr)
 {
 	fprintf(stdout, "nlines: %lu\n", arr->nlines);
@@ -128,12 +86,12 @@ void print_lines_arr(LinesArr *arr)
 	for (i = 0; i < arr->nlines; ++i)
 	{
 		fprintf(stdout, "%lu: ", i + 1);
+
 		for (j = 0; j < arr->lines[i].line_length; ++j)
 		{
 			fprintf(stdout, "%c", arr->lines[i].line[j]);
 		}
-/*		if (i != 0)
-			fprintf(stdout, " - dif: %d", strings_cmp(&arr->lines[i], &arr->lines[i - 1]));*/
+
 		fprintf(stdout, "\n");
 	}
 }
@@ -156,4 +114,32 @@ size_t find_nlines(FILE *fd)
 	fseek(fd, 0, SEEK_SET);
 
 	return nlines;
+}
+
+void print_sorted(FILE *output_file, LinesArr *arr)
+{
+	for (size_t i = 0; i < arr->nlines; i++)
+	{
+		fprintf(output_file, "%lu: %s\n", i, arr->lines[i].line);
+	}
+
+	fprintf(output_file, "\n");
+
+}
+
+void print_original(FILE *output_file, LinesArr *arr)
+{
+	for (size_t i = 0; i < arr->text.line_length; ++i)
+	{
+		int c = arr->text.line[i];
+		switch (c)
+		{
+			case '\0':
+				fprintf(output_file, "\r");
+				break;
+			default:
+				fprintf(output_file, "%c", c);
+				break;
+		}
+	}
 }

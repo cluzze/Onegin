@@ -18,6 +18,8 @@ typedef struct
 
 FILE *open_file(const char filename[]);
 
+void init_arr(FILE *fd, LinesArr *arr);
+
 size_t find_filesize(FILE *fd);
 
 char* read_text(FILE *fd, size_t filesize);
@@ -26,10 +28,10 @@ Line* get_lines_from_text(char *text, size_t nlines);
 
 void print_lines_arr(LinesArr *arr);
 
-LinesArr* create_lines_arr(FILE *fd, size_t nlines);
-
-void destroy_lines_arr(LinesArr *arr);
-
 size_t find_nlines(FILE *fd);
+
+void print_sorted(FILE *output_filename, LinesArr *arr);
+
+void print_original(FILE *output_filename, LinesArr *arr);
 
 #endif
