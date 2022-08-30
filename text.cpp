@@ -83,25 +83,6 @@ Line* get_lines_from_text(char *text, size_t nlines)
 	return lines;
 }
 
-void print_lines_arr(LinesArr *arr)
-{
-	fprintf(stdout, "nlines: %lu\n", arr->nlines);
-
-	size_t i = 0;
-	size_t j = 0;
-	for (i = 0; i < arr->nlines; ++i)
-	{
-		fprintf(stdout, "%lu: ", i + 1);
-
-		for (j = 0; j < arr->lines[i].line_length; ++j)
-		{
-			fprintf(stdout, "%c", arr->lines[i].line[j]);
-		}
-
-		fprintf(stdout, "\n");
-	}
-}
-
 size_t find_nlines(FILE *fd)
 {
 	MYASSERT(fd != NULL)

@@ -24,7 +24,6 @@ int main()
 	print_sorted(output_file, &arr);
 
 	heap_sort(&arr, (int)arr.nlines, cmp_strings);
-
 	fprintf(output_file, "\n\n************************REVERSE SORTED************************\n");
 	print_sorted(output_file, &arr);
 

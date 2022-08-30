@@ -1,3 +1,6 @@
+//!@mainpage
+//!Functions for sorting lines of text 
+
 #ifndef _SORT_
 #define _SORT_
 
