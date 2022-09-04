@@ -67,14 +67,16 @@ Line* get_lines_from_text(char *text, size_t nlines);
 size_t find_nlines(FILE *fd);
 
 /**
- *	\brief prints pointers to lines in specific order into fd
- *	\param[in] output_filename - file in which 
+ *	\brief prints lines in specific order into fd
+ *	\param[in] output_filename - output_filename - fd for output
+ * 	\param[in] arr - printed text
  */
 void print_sorted(FILE *output_filename, LinesArr *arr);
 
 /**
  *	\brief prints original text
- *	\param[in] filename - file to open
+ *	\param[in] output_filename - fd for output
+ *  \param[in] arr - printed text
  */
 void print_original(FILE *output_filename, LinesArr *arr);
 
